@@ -133,7 +133,7 @@ export const projects = [
   },
   {
     id: "book-e-pedia",
-    name: "Book-E-Pedia",
+    name: "Book-E-Pedia  ",
     type: "Digital Library & E-Commerce Platform",
     tech: ["React 19", "React Router v7", "Context API", "CSS3", "Python", "Django", "Django REST Framework", "PostgreSQL", "SQLite"],
     description: "A college group project focused on creating a unified digital library and e-commerce ecosystem for physical books, e-books, audiobooks, and video courses.",
