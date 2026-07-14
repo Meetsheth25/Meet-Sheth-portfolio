@@ -1,77 +1,57 @@
 import React from 'react';
-import { socialLinks } from '../data/portfolioData';
+import { personalInfo, socialLinks } from '../data/portfolioData';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import '../styles/footer.css';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  const githubConfigured = socialLinks.github && socialLinks.github.trim() !== '';
-  const linkedinConfigured = socialLinks.linkedin && socialLinks.linkedin.trim() !== '';
+  const year = new Date().getFullYear();
 
   return (
     <footer className="footer">
-      <div className="footer-content">
+      <div className="footer-inner">
+
+        {/* Brand */}
         <div className="footer-brand">
-          Meet Sheth
+          <span className="footer-monogram" aria-hidden="true">MS</span>
+          <span className="footer-name">{personalInfo.name}</span>
         </div>
 
-        <div className="footer-credit">
-          Designed & Developed by Meet Sheth
-        </div>
+        {/* Credit + copyright */}
+        <p className="footer-copy">
+          Designed &amp; built by {personalInfo.name} &mdash; &copy; {year}
+        </p>
 
-        <div className="footer-socials">
-          {/* GitHub */}
-          <div className="tooltip-container">
-            <a
-              href={githubConfigured ? socialLinks.github : '#'}
-              onClick={(e) => !githubConfigured && e.preventDefault()}
-              className={`footer-social-link ${!githubConfigured ? 'disabled' : ''}`}
-              aria-label="GitHub Profile"
-            >
-              <FaGithub />
-            </a>
-            {!githubConfigured && (
-              <span className="tooltip-text">
-                GitHub URL Configurable
-              </span>
-            )}
-          </div>
-
-          {/* LinkedIn */}
-          <div className="tooltip-container">
-            <a
-              href={linkedinConfigured ? socialLinks.linkedin : '#'}
-              onClick={(e) => !linkedinConfigured && e.preventDefault()}
-              className={`footer-social-link ${!linkedinConfigured ? 'disabled' : ''}`}
-              aria-label="LinkedIn Profile"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaLinkedin />
-            </a>
-            {!linkedinConfigured && (
-              <span className="tooltip-text">
-                LinkedIn URL Configurable
-              </span>
-            )}
-          </div>
-
-          {/* Email */}
+        {/* Social links */}
+        <nav className="footer-socials" aria-label="Social links">
           <a
-            href={socialLinks.email}
-            className="footer-social-link"
-            aria-label="Email Address"
+            href={socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
+            className="footer-social"
+            aria-label="GitHub Profile"
           >
-            <FaEnvelope />
+            <FaGithub aria-hidden="true" />
           </a>
-        </div>
+          <a
+            href={socialLinks.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-social"
+            aria-label="LinkedIn Profile"
+          >
+            <FaLinkedin aria-hidden="true" />
+          </a>
+          <a
+            href={socialLinks.email}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-social"
+            aria-label="Send Email"
+          >
+            <FaEnvelope aria-hidden="true" />
+          </a>
+        </nav>
 
-        <div className="footer-copyright">
-          &copy; {currentYear} Meet Sheth. All rights reserved.
-        </div>
       </div>
     </footer>
   );

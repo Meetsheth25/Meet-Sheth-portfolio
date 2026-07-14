@@ -1,90 +1,101 @@
-/* Premium Footer Styling */
+/* ===================================================
+   FOOTER
+   =================================================== */
+
 .footer {
-  border-top: 1px solid var(--border-color);
-  background-color: var(--main-surface);
-  padding: 50px 24px;
-  position: relative;
-  /* Thin grid pattern matching background */
-  background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
+  width: 100%;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
 }
 
-.footer-content {
-  max-width: 1200px;
+.footer-inner {
+  max-width: var(--container);
   margin: 0 auto;
+  padding: 28px 28px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 24px;
 }
 
+/* Brand */
 .footer-brand {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--dark-navy);
-  letter-spacing: -0.03em;
-}
-
-.footer-brand span {
-  color: var(--brand-blue);
-  text-shadow: 0 0 10px rgba(37, 99, 235, 0.15);
-}
-
-.footer-credit {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.footer-copyright {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-.footer-socials {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 9px;
 }
 
-.footer-social-link {
-  font-size: 1.2rem;
-  color: var(--text-secondary);
-  transition: all var(--transition-normal);
+.footer-monogram {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  color: var(--canvas);
+  border-radius: var(--r-xs);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
-.footer-social-link:hover:not(.disabled) {
-  color: var(--brand-blue);
-  border-color: rgba(37, 99, 235, 0.3);
-  background-color: rgba(37, 99, 235, 0.05);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15); /* Social hover glow */
+.footer-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: -0.02em;
 }
 
-.footer-social-link.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  background-color: var(--bg-muted);
+/* Copyright */
+.footer-copy {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  flex: 1;
 }
 
-@media (max-width: 992px) {
-  .footer-content {
+/* Social icons */
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+
+.footer-social:hover {
+  color: var(--text-primary);
+  border-color: var(--border-md);
+  background: var(--elevated);
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+
+@media (max-width: 600px) {
+  .footer-inner {
     flex-direction: column;
+    align-items: center;
     text-align: center;
-    gap: 20px;
+    padding: 24px 20px;
+    gap: 14px;
   }
-  
-  .footer-socials {
-    order: -1;
-  }
+  .footer-copy { flex: none; }
 }

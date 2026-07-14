@@ -8,20 +8,23 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-
+import EngineeringBackground from './components/EngineeringBackground';
 import './styles/global.css';
 
 function App() {
   return (
-    <div className="portfolio-app">
+    <div className="portfolio-root">
+      <EngineeringBackground />
       <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Education />
-      <Contact />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Education />
+        <Contact />
+      </main>
       <Footer />
     </div>
   );

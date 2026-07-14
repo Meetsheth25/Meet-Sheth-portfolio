@@ -1,138 +1,148 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
-import { FiArrowRight, FiExternalLink } from 'react-icons/fi';
+import { FiArrowRight, FiExternalLink, FiMapPin } from 'react-icons/fi';
 import { personalInfo, socialLinks } from '../data/portfolioData';
 import '../styles/hero.css';
 
+const ease = [0.16, 1, 0.3, 1];
+
+const fadeUp = (delay = 0) => ({
+  initial:    { opacity: 0, y: 22 },
+  animate:    { opacity: 1, y: 0 },
+  transition: { duration: 0.55, delay, ease },
+});
+
 const Hero = () => {
-  const handleScrollToProjects = (e) => {
+  const scrollTo = (e, id) => {
     e.preventDefault();
-    const el = document.getElementById('projects');
-    if (el) {
-      const offsetTop = el.offsetTop - 75;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.offsetTop - 68, behavior: 'smooth' });
   };
 
-  // Safe checks for social profile configurations
-  const githubConfigured = socialLinks.github && socialLinks.github.trim() !== '';
-  const linkedinConfigured = socialLinks.linkedin && socialLinks.linkedin.trim() !== '';
-
   return (
-    <section id="home" className="hero-container">
-      <motion.div 
-        className="hero-content"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <span className="hero-subtitle">Hello, I'm</span>
-        <h1 className="hero-title">{personalInfo.name}</h1>
-        <h2 className="hero-role">{personalInfo.title}</h2>
-        <p className="hero-description">{personalInfo.description}</p>
-        
-        <div className="hero-ctas">
-          <a href="#projects" onClick={handleScrollToProjects} className="btn btn-primary">
-            View My Projects <FiArrowRight />
-          </a>
-          <a 
-            href={socialLinks.resume} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="btn btn-secondary"
-          >
-            View Resume <FiExternalLink />
-          </a>
-        </div>
+    <section id="home" className="hero">
+      {/* Background — subtle grid mesh + ambient glow */}
+      <div className="hero-bg" aria-hidden="true">
+        <div className="hero-bg-grid" />
+        <div className="hero-bg-glow" />
+      </div>
 
-        <div className="hero-socials">
-          {/* GitHub Icon with Configurable Validation */}
-          <div className="tooltip-container">
-            <a 
-              href={githubConfigured ? socialLinks.github : '#'} 
-              onClick={(e) => !githubConfigured && e.preventDefault()}
-              className="hero-social-icon" 
-              aria-label="GitHub Profile"
-              style={{ cursor: githubConfigured ? 'pointer' : 'not-allowed' }}
+      <div className="hero-layout">
+        {/* ── LEFT: Identity block ──────────────────── */}
+        <div className="hero-identity">
+
+          <motion.span className="hero-overline" {...fadeUp(0.1)}>
+            <span className="hero-overline-dot" aria-hidden="true" />
+            {personalInfo.education}
+          </motion.span>
+
+          <motion.h1 className="hero-name" {...fadeUp(0.18)}>
+            {personalInfo.name}
+          </motion.h1>
+
+          <motion.div className="hero-role-row" {...fadeUp(0.26)}>
+            <span className="hero-role-mark" aria-hidden="true" />
+            <span className="hero-role-text">{personalInfo.title}</span>
+          </motion.div>
+
+          <motion.p className="hero-desc" {...fadeUp(0.34)}>
+            {personalInfo.description}
+          </motion.p>
+
+          <motion.div className="hero-actions" {...fadeUp(0.42)}>
+            <a
+              href="#projects"
+              onClick={(e) => scrollTo(e, 'projects')}
+              className="hero-btn-primary"
             >
-              <FaGithub />
+              View Projects
+              <FiArrowRight aria-hidden="true" />
             </a>
-            {!githubConfigured && (
-              <span className="tooltip-text">
-                <strong>Configurable Placeholder</strong><br />
-                Set actual GitHub URL inside src/data/portfolioData.js
-              </span>
-            )}
-          </div>
-
-          {/* LinkedIn Icon with Configurable Validation */}
-          <div className="tooltip-container">
-            <a 
-              href={linkedinConfigured ? socialLinks.linkedin : '#'} 
-              onClick={(e) => !linkedinConfigured && e.preventDefault()}
-              className="hero-social-icon" 
-              aria-label="LinkedIn Profile"
-              style={{ cursor: linkedinConfigured ? 'pointer' : 'not-allowed' }}
+            <a
+              href={socialLinks.resume}
               target="_blank"
               rel="noopener noreferrer"
+              className="hero-btn-outline"
             >
-              <FaLinkedin />
+              Resume
+              <FiExternalLink aria-hidden="true" />
             </a>
-            {!linkedinConfigured && (
-              <span className="tooltip-text">
-                <strong>Configurable Placeholder</strong><br />
-                Set actual LinkedIn URL inside src/data/portfolioData.js
-              </span>
-            )}
+          </motion.div>
+
+          <motion.div className="hero-socials" {...fadeUp(0.50)}>
+            <a
+              href={socialLinks.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-social"
+              aria-label="GitHub Profile"
+            >
+              <FaGithub aria-hidden="true" />
+            </a>
+            <a
+              href={socialLinks.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-social"
+              aria-label="LinkedIn Profile"
+            >
+              <FaLinkedin aria-hidden="true" />
+            </a>
+            <a
+              href={socialLinks.email}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-social"
+              aria-label="Send Email"
+            >
+              <FaEnvelope aria-hidden="true" />
+            </a>
+          </motion.div>
+        </div>
+
+        {/* ── RIGHT: Development focus panel ───────── */}
+        <motion.aside
+          className="hero-panel"
+          aria-label="Development focus areas"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.32, ease }}
+        >
+          <div className="hero-panel-header">
+            <span className="hero-panel-label">Development Focus</span>
+            <span className="hero-panel-count">{personalInfo.highlights.length} areas</span>
           </div>
 
-          {/* Email Icon */}
-          <a 
-            href={socialLinks.email} 
-            className="hero-social-icon" 
-            aria-label="Send Email"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaEnvelope />
-          </a>
-        </div>
-      </motion.div>
+          <ul className="hero-panel-list" role="list">
+            {personalInfo.highlights.map((h, i) => (
+              <li key={i} className="hero-panel-item">
+                <span className="hero-panel-idx" aria-hidden="true">0{i + 1}</span>
+                <div className="hero-panel-text">
+                  <span className="hero-panel-title">{h.title}</span>
+                  <span className="hero-panel-desc">{h.desc}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
 
-      <motion.div 
-        className="hero-visual"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+          <div className="hero-panel-footer">
+            <FiMapPin size={12} aria-hidden="true" />
+            <span>{personalInfo.location}</span>
+          </div>
+        </motion.aside>
+      </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        className="hero-scroll-cue"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1, duration: 0.6 }}
+        aria-hidden="true"
       >
-        <div className="code-card">
-          <div className="code-header">
-            <div className="code-dots">
-              <span className="dot-red"></span>
-              <span className="dot-yellow"></span>
-              <span className="dot-green"></span>
-            </div>
-            <span className="code-tab">developer.js</span>
-          </div>
-          <div className="code-body">
-            <p><span className="code-keyword">const</span> <span className="code-variable">developer</span> = &#123;</p>
-            <p style={{ paddingLeft: '20px' }}><span className="code-property">name</span>: <span className="code-string">"Meet Sheth"</span>,</p>
-            <p style={{ paddingLeft: '20px' }}><span className="code-property">role</span>: <span className="code-string">"Full Stack Developer"</span>,</p>
-            <p style={{ paddingLeft: '20px' }}><span className="code-property">education</span>: <span className="code-string">"M.Sc.(IT)"</span>,</p>
-            <p style={{ paddingLeft: '20px' }}><span className="code-property">focus</span>: [</p>
-            <p style={{ paddingLeft: '40px' }}><span className="code-string">"Full Stack Development"</span>,</p>
-            <p style={{ paddingLeft: '40px' }}><span className="code-string">"Backend Development"</span>,</p>
-            <p style={{ paddingLeft: '40px' }}><span className="code-string">"System Design"</span></p>
-            <p style={{ paddingLeft: '20px' }}>]</p>
-            <p>&#125;;</p>
-            <br />
-            <p className="code-comment">// Ready for internship & Placements</p>
-          </div>
-        </div>
+        <span className="hero-scroll-line" />
+        <span className="hero-scroll-label">scroll</span>
       </motion.div>
     </section>
   );

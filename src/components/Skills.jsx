@@ -1,78 +1,98 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { skills } from '../data/portfolioData';
-import { 
-  FaCode, FaJava, FaJs, FaDatabase, FaPython, FaReact, 
-  FaNodeJs, FaGitAlt, FaGithub, FaTerminal, FaFigma, 
-  FaGoogle, FaCloud, FaCreditCard, FaServer, FaShareAlt
+import {
+  FaJava, FaJs, FaDatabase, FaPython, FaReact,
+  FaNodeJs, FaGitAlt, FaGithub, FaTerminal, FaFigma,
+  FaGoogle, FaCloud, FaCreditCard, FaServer,
 } from 'react-icons/fa';
-import { 
-  SiCplusplus, SiTailwindcss, SiPostgresql, SiMysql, 
-  SiMongodb, SiSqlite, SiSocketdotio, SiPostman, SiVite
+import {
+  SiCplusplus, SiTailwindcss, SiPostgresql, SiMysql,
+  SiMongodb, SiSqlite, SiSocketdotio, SiPostman, SiVite,
 } from 'react-icons/si';
+import { TbRouter } from 'react-icons/tb';
+import { MdOutlineHub } from 'react-icons/md';
+import { FiCode } from 'react-icons/fi';
 import '../styles/skills.css';
 
-const iconMap = {
-  "C++": <SiCplusplus style={{ color: '#00599C' }} />,
-  "Java": <FaJava style={{ color: '#007396' }} />,
-  "JavaScript": <FaJs style={{ color: '#F7DF1E' }} />,
-  "SQL": <FaDatabase style={{ color: '#336791' }} />,
-  "Python": <FaPython style={{ color: '#3776AB' }} />,
-  "React.js": <FaReact style={{ color: '#61DAFB' }} />,
-  "Vite": <SiVite style={{ color: '#646CFF' }} />,
-  "Tailwind CSS": <SiTailwindcss style={{ color: '#06B6D4' }} />,
-  "Node.js": <FaNodeJs style={{ color: '#339933' }} />,
-  "Express.js": <FaServer style={{ color: '#000000' }} />,
-  "React Router": <FaShareAlt style={{ color: '#CA4245' }} />,
-  "Context API": <FaShareAlt style={{ color: '#61DAFB' }} />,
-  "Socket.IO": <SiSocketdotio style={{ color: '#010101' }} />,
-  "MongoDB": <SiMongodb style={{ color: '#47A248' }} />,
-  "Mongoose": <FaDatabase style={{ color: '#880000' }} />,
-  "MySQL": <SiMysql style={{ color: '#4479A1' }} />,
-  "PostgreSQL": <SiPostgresql style={{ color: '#4169E1' }} />,
-  "SQLite": <SiSqlite style={{ color: '#003B57' }} />,
-  "Cloudinary": <FaCloud style={{ color: '#3448C5' }} />,
-  "Razorpay API": <FaCreditCard style={{ color: '#0B409C' }} />,
-  "Google OAuth 2.0": <FaGoogle style={{ color: '#4285F4' }} />,
-  "Git": <FaGitAlt style={{ color: '#F05032' }} />,
-  "GitHub": <FaGithub style={{ color: '#181717' }} />,
-  "VS Code": <FaCode style={{ color: '#007ACC' }} />,
-  "Postman": <SiPostman style={{ color: '#FF6C37' }} />,
-  "Linux Shell": <FaTerminal style={{ color: '#4EAA25' }} />,
-  "Figma": <FaFigma style={{ color: '#F24E1E' }} />
+/* Map skill name → icon element */
+const ICON_MAP = {
+  'C++':              <SiCplusplus />,
+  'Java':             <FaJava />,
+  'JavaScript':       <FaJs />,
+  'SQL':              <FaDatabase />,
+  'Python':           <FaPython />,
+  'React.js':         <FaReact />,
+  'Vite':             <SiVite />,
+  'Tailwind CSS':     <SiTailwindcss />,
+  'Node.js':          <FaNodeJs />,
+  'Express.js':       <FaServer />,
+  'React Router':     <TbRouter />,
+  'Context API':      <MdOutlineHub />,
+  'Socket.IO':        <SiSocketdotio />,
+  'MongoDB':          <SiMongodb />,
+  'Mongoose':         <FaDatabase />,
+  'MySQL':            <SiMysql />,
+  'PostgreSQL':       <SiPostgresql />,
+  'SQLite':           <SiSqlite />,
+  'Cloudinary':       <FaCloud />,
+  'Razorpay API':     <FaCreditCard />,
+  'Google OAuth 2.0': <FaGoogle />,
+  'Git':              <FaGitAlt />,
+  'GitHub':           <FaGithub />,
+  'VS Code':          <FiCode />,
+  'Postman':          <SiPostman />,
+  'Linux Shell':      <FaTerminal />,
+  'Figma':            <FaFigma />,
 };
 
+/* Left-border accent per category row */
+const ROW_ACCENTS = [
+  'var(--accent)',   /* Languages  */
+  'var(--green)',   /* Frameworks */
+  'var(--indigo)',  /* Cloud/DB   */
+  'var(--gold)',    /* Dev Tools  */
+];
+
+const ease = [0.16, 1, 0.3, 1];
+
 const Skills = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const ref    = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <section id="skills" ref={ref}>
-      <div className="section-header">
-        <span className="section-tag">Expertise</span>
-        <h2 className="section-title">Technical <span>Skills</span></h2>
-        <p className="section-subtitle">
-          My developer stack and tools classified by core competency.
-        </p>
-      </div>
+      <span className="sec-overline">Expertise</span>
+      <h2 className="sec-heading">
+        Technical <span className="hl">Stack</span>
+      </h2>
 
-      <div className="skills-grid">
+      <div className="skills-matrix" role="list">
         {skills.map((cat, idx) => (
-          <motion.div 
-            key={idx} 
-            className="skills-category-card"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
+          <motion.div
+            key={idx}
+            className="skill-row"
+            style={{ '--row-accent': ROW_ACCENTS[idx] }}
+            role="listitem"
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.48, delay: idx * 0.1, ease }}
           >
-            <h3 className="skills-category-title">
-              {cat.category}
-            </h3>
-            <div className="skills-list">
-              {cat.items.map((skill, sIdx) => (
-                <span key={sIdx} className="skill-badge">
-                  {iconMap[skill.name] || <FaCode />}
-                  {skill.name}
+            {/* Category label */}
+            <div className="skill-row-head">
+              <span className="skill-row-accent-bar" aria-hidden="true" />
+              <h3 className="skill-row-label">{cat.category}</h3>
+              <span className="skill-row-badge">{cat.items.length}</span>
+            </div>
+
+            {/* Chip grid */}
+            <div className="skill-chips" role="list" aria-label={`${cat.category} skills`}>
+              {cat.items.map((skill, si) => (
+                <span key={si} className="skill-chip" role="listitem">
+                  <span className="skill-chip-icon" aria-hidden="true">
+                    {ICON_MAP[skill.name] ?? <FiCode />}
+                  </span>
+                  <span className="skill-chip-name">{skill.name}</span>
                 </span>
               ))}
             </div>

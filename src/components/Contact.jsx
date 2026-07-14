@@ -2,106 +2,106 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { personalInfo, socialLinks } from '../data/portfolioData';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { FiMail } from 'react-icons/fi';
+import { FiMail, FiArrowRight } from 'react-icons/fi';
 import '../styles/contact.css';
 
-const Contact = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+const ease = [0.16, 1, 0.3, 1];
 
-  const githubConfigured = socialLinks.github && socialLinks.github.trim() !== '';
-  const linkedinConfigured = socialLinks.linkedin && socialLinks.linkedin.trim() !== '';
+const CONTACT_CARDS = [
+  {
+    icon: FaEnvelope,
+    label: 'Email',
+    value: personalInfo.email,
+    href: socialLinks.email,
+    external: true,
+    accent: 'var(--accent)',
+  },
+  {
+    icon: FaGithub,
+    label: 'GitHub',
+    value: 'Meetsheth25',
+    href: socialLinks.github,
+    external: true,
+    accent: 'var(--text-secondary)',
+  },
+  {
+    icon: FaLinkedin,
+    label: 'LinkedIn',
+    value: 'meet-sheth25',
+    href: socialLinks.linkedin,
+    external: true,
+    accent: '#0A66C2',
+  },
+];
+
+const Contact = () => {
+  const ref    = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="contact" ref={ref}>
-      <div className="section-header">
-        <span className="section-tag">Reach Out</span>
-        <h2 className="section-title">Let's <span>Connect</span></h2>
-        <p className="section-subtitle">
-          Opportunities for collaboration, placements, internships, or development queries.
-        </p>
-      </div>
+    <section id="contact" ref={ref} className="contact-section">
+      {/* Ambient glow behind heading */}
+      <div className="contact-glow" aria-hidden="true" />
 
-      <motion.div 
-        className="contact-card"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+      <motion.div
+        className="contact-inner"
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.55, ease }}
       >
-        <p className="contact-desc">
-          I'm interested in full-stack development, backend engineering, and software development opportunities. Feel free to reach out to discuss projects, internships, or collaboration opportunities.
+        <span className="sec-overline">Reach Out</span>
+
+        <h2 className="contact-heading">
+          Let's <span className="hl">Connect</span>
+        </h2>
+        <p className="contact-subtext">
+          Open to full-stack and backend engineering opportunities, internships, and collaboration.
+          Feel free to reach out.
         </p>
 
-        <div className="contact-info-grid">
-          {/* Email Info */}
-          <a 
-            href={socialLinks.email} 
-            className="contact-info-item"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaEnvelope className="contact-info-icon" />
-            <span className="contact-info-label">Email</span>
-            <span className="contact-info-value">{personalInfo.email}</span>
-          </a>
-
-          {/* GitHub Info */}
-          <div className="tooltip-container">
-            <a 
-              href={githubConfigured ? socialLinks.github : '#'} 
-              onClick={(e) => !githubConfigured && e.preventDefault()}
-              className={`contact-info-item ${!githubConfigured ? 'disabled' : ''}`}
-              style={{ width: '100%' }}
-            >
-              <FaGithub className="contact-info-icon" />
-              <span className="contact-info-label">GitHub</span>
-              <span className="contact-info-value">
-                {githubConfigured ? 'Meetsheth25' : 'Configure URL'}
-              </span>
-            </a>
-            {!githubConfigured && (
-              <span className="tooltip-text">
-                <strong>Configurable Placeholder</strong><br />
-                Set actual GitHub URL inside src/data/portfolioData.js
-              </span>
-            )}
-          </div>
-
-          {/* LinkedIn Info */}
-          <div className="tooltip-container">
-            <a 
-              href={linkedinConfigured ? socialLinks.linkedin : '#'} 
-              onClick={(e) => !linkedinConfigured && e.preventDefault()}
-              className={`contact-info-item ${!linkedinConfigured ? 'disabled' : ''}`}
-              style={{ width: '100%' }}
+        {/* Contact method cards */}
+        <div className="contact-cards" role="list" aria-label="Contact methods">
+          {CONTACT_CARDS.map((card, i) => (
+            <motion.a
+              key={i}
+              href={card.href}
               target="_blank"
               rel="noopener noreferrer"
+              className="contact-card"
+              style={{ '--card-accent': card.accent }}
+              role="listitem"
+              aria-label={`Contact via ${card.label}`}
+              initial={{ opacity: 0, y: 18 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.45, delay: 0.12 + i * 0.08, ease }}
             >
-              <FaLinkedin className="contact-info-icon" />
-              <span className="contact-info-label">LinkedIn</span>
-              <span className="contact-info-value">
-                {linkedinConfigured ? 'Meet Sheth' : 'Configure URL'}
+              <span className="contact-card-icon" aria-hidden="true">
+                <card.icon />
               </span>
-            </a>
-            {!linkedinConfigured && (
-              <span className="tooltip-text">
-                <strong>Configurable Placeholder</strong><br />
-                Set actual LinkedIn URL inside src/data/portfolioData.js
-              </span>
-            )}
-          </div>
+              <span className="contact-card-label">{card.label}</span>
+              <span className="contact-card-value">{card.value}</span>
+            </motion.a>
+          ))}
         </div>
 
-        <div className="contact-action">
-          <a 
-            href={socialLinks.email} 
-            className="btn btn-primary contact-btn"
+        {/* Primary CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.45, delay: 0.4, ease }}
+        >
+          <a
+            href={socialLinks.email}
             target="_blank"
             rel="noopener noreferrer"
+            className="contact-cta"
+            aria-label="Send an email"
           >
-            <FiMail /> Send Me an Email
+            <FiMail aria-hidden="true" />
+            Send Me an Email
+            <FiArrowRight aria-hidden="true" />
           </a>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

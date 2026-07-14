@@ -80,8 +80,18 @@ export const skills = [
 
 export const experience = [
   {
+    company: "Delta Infosoft Private Limited",
+    role: "Full Stack Developer Intern",
+    duration: "May 2026 – Jul 2026",
+    location: "Ahmedabad, Gujarat",
+    responsibilities: [
+      "Developed ArenaSync, a full-stack tournament management platform using the MERN stack, implementing role-based workflows for administrators, organizers, coaches, players, and sponsors.",
+      "Engineered secure RESTful APIs and tournament management workflows, including team registration, knockout match progression, sponsor management, payment verification, and real-time match updates using Socket.IO."
+    ]
+  },
+  {
     company: "VNH Infotech",
-    role: "Project Intern",
+    role: "Full Stack Developer Intern",
     duration: "October 2024 – March 2025",
     location: "Ahmedabad, Gujarat",
     responsibilities: [
@@ -161,7 +171,7 @@ export const education = [
   {
     institution: "GLS University",
     duration: "2022 – 2025",
-    program: "B.Sc. (IT)",
+    program: "B.Sc. Information Technology",
     score: "CGPA: 7.87",
     location: "Ahmedabad, Gujarat"
   },

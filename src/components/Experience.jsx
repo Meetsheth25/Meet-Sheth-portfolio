@@ -2,53 +2,74 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { experience } from '../data/portfolioData';
 import { FiCalendar, FiMapPin } from 'react-icons/fi';
+import { MdWorkOutline } from 'react-icons/md';
 import '../styles/experience.css';
 
+const ease = [0.16, 1, 0.3, 1];
+
 const Experience = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const ref    = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <section id="experience" ref={ref}>
-      <div className="section-header">
-        <span className="section-tag">Career</span>
-        <h2 className="section-title">Work <span>Experience</span></h2>
-        <p className="section-subtitle">
-          My professional roles, internship timeline, and core responsibilities.
-        </p>
-      </div>
+      <span className="sec-overline">Career</span>
+      <h2 className="sec-heading">
+        Work <span className="hl">Experience</span>
+      </h2>
 
-      <div className="timeline">
+      <div className="exp-list">
         {experience.map((exp, index) => (
-          <div className="timeline-item" key={index}>
-            <div className="timeline-marker"></div>
-            <motion.div 
-              className="timeline-content"
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-            >
-              <div className="timeline-header">
-                <div>
-                  <h3 className="timeline-role">{exp.role}</h3>
-                  <span className="timeline-company">{exp.company}</span>
-                </div>
-                <div className="timeline-meta">
-                  <span className="timeline-date">
-                    <FiCalendar /> {exp.duration}
-                  </span>
-                  <span className="timeline-location">
-                    <FiMapPin /> {exp.location}
-                  </span>
-                </div>
+          <motion.article
+            key={index}
+            className="exp-record"
+            aria-label={`${exp.role} at ${exp.company}`}
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: index * 0.1, ease }}
+          >
+            {/* Decorative index number */}
+            <span className="exp-bg-num" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+
+            {/* Top: role + company */}
+            <div className="exp-top">
+              <div className="exp-company-row">
+                <span className="exp-company-icon" aria-hidden="true">
+                  <MdWorkOutline />
+                </span>
+                <span className="exp-company">{exp.company}</span>
               </div>
-              <ul className="timeline-list">
-                {exp.responsibilities.map((resp, rIndex) => (
-                  <li key={rIndex}>{resp}</li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
+              <h3 className="exp-role">{exp.role}</h3>
+            </div>
+
+            {/* Meta: duration + location */}
+            <div className="exp-meta">
+              <span className="exp-meta-item">
+                <FiCalendar size={13} aria-hidden="true" />
+                {exp.duration}
+              </span>
+              <span className="exp-meta-sep" aria-hidden="true" />
+              <span className="exp-meta-item">
+                <FiMapPin size={13} aria-hidden="true" />
+                {exp.location}
+              </span>
+            </div>
+
+            {/* Divider */}
+            <div className="exp-divider" aria-hidden="true" />
+
+            {/* Responsibilities */}
+            <ul className="exp-responsibilities" aria-label="Responsibilities">
+              {exp.responsibilities.map((item, ri) => (
+                <li key={ri} className="exp-responsibility-item">
+                  <span className="exp-bullet" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.article>
         ))}
       </div>
     </section>
