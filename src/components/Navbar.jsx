@@ -5,15 +5,16 @@ import { FiExternalLink, FiX, FiMenu } from 'react-icons/fi';
 import '../styles/navbar.css';
 
 const NAV_ITEMS = [
-  { label: 'About',      id: 'about' },
-  { label: 'Skills',     id: 'skills' },
-  { label: 'Experience', id: 'experience' },
-  { label: 'Projects',   id: 'projects' },
-  { label: 'Education',  id: 'education' },
-  { label: 'Contact',    id: 'contact' },
+  { label: 'About',          id: 'about' },
+  { label: 'Skills',         id: 'skills' },
+  { label: 'Experience',     id: 'experience' },
+  { label: 'Projects',       id: 'projects' },
+  { label: 'Education',      id: 'education' },
+  { label: 'Certifications', id: 'certifications' },
+  { label: 'Contact',        id: 'contact' },
 ];
 
-const ALL_SECTIONS = ['home', 'about', 'skills', 'experience', 'projects', 'education', 'contact'];
+const ALL_SECTIONS = ['home', 'about', 'skills', 'experience', 'projects', 'education', 'certifications', 'contact'];
 
 const Navbar = () => {
   const [scrolled, setScrolled]           = useState(false);
