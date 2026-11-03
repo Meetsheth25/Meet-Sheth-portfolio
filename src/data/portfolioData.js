@@ -8,6 +8,7 @@ export const personalInfo = {
   title: "Full Stack Developer",
   heroTitle: "Full Stack Developer & M.Sc.(IT) Student",
   email: "mitsheth2@gmail.com",
+  phone: "+91 95125 48300",
   location: "Gujarat, India",
   description: "I build secure and scalable full-stack web applications with modern frontend experiences, robust backend architectures, and real-world integrations.",
   aboutDescription: "I am an M.Sc. Information Technology student at Dhirubhai Ambani University with a strong interest in full-stack development, backend development, and system design. I enjoy building complete web applications that combine responsive frontend interfaces with secure backend APIs, authentication systems, databases, payment integrations, and role-based architectures. Through my academic projects and internship experience, I have worked with MERN-stack technologies and modern web development tools to develop practical software applications.",
@@ -25,6 +26,7 @@ export const socialLinks = {
   // TODO: Add actual LinkedIn profile URL
   linkedin: "https://www.linkedin.com/in/meet-sheth25",
   email: "https://mail.google.com/mail/?view=cm&fs=1&to=mitsheth2@gmail.com&su=Portfolio%20Inquiry&body=Hello%20Meet,%0A%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect.",
+  phone: "tel:+919512548300",
   resume: "https://drive.google.com/file/d/13pPDvI1DK93LZO9cxGp2GbS9Ux2py7XQ/view?usp=sharing"
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { personalInfo, socialLinks } from '../data/portfolioData';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
 import '../styles/footer.css';
 
 const Footer = () => {
@@ -21,8 +21,8 @@ const Footer = () => {
           Designed &amp; built by {personalInfo.name} &mdash; &copy; {year}
         </p>
 
-        {/* Social links */}
-        <nav className="footer-socials" aria-label="Social links">
+        {/* Social & Contact links */}
+        <nav className="footer-socials" aria-label="Social and contact links">
           <a
             href={socialLinks.github}
             target="_blank"
@@ -49,6 +49,13 @@ const Footer = () => {
             aria-label="Send Email"
           >
             <FaEnvelope aria-hidden="true" />
+          </a>
+          <a
+            href={socialLinks.phone}
+            className="footer-social"
+            aria-label={`Call ${personalInfo.phone}`}
+          >
+            <FaPhoneAlt aria-hidden="true" />
           </a>
         </nav>
 

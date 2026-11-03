@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { personalInfo, socialLinks } from '../data/portfolioData';
-import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaPhoneAlt } from 'react-icons/fa';
 import { FiMail, FiArrowRight } from 'react-icons/fi';
 import '../styles/contact.css';
 
@@ -15,6 +15,14 @@ const CONTACT_CARDS = [
     href: socialLinks.email,
     external: true,
     accent: 'var(--accent)',
+  },
+  {
+    icon: FaPhoneAlt,
+    label: 'Phone',
+    value: personalInfo.phone,
+    href: socialLinks.phone,
+    external: false,
+    accent: 'var(--green)',
   },
   {
     icon: FaGithub,
@@ -35,7 +43,7 @@ const CONTACT_CARDS = [
 ];
 
 const Contact = () => {
-  const ref    = useRef(null);
+  const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
@@ -65,8 +73,7 @@ const Contact = () => {
             <motion.a
               key={i}
               href={card.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(card.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className="contact-card"
               style={{ '--card-accent': card.accent }}
               role="listitem"
